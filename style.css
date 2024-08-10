@@ -1,0 +1,40 @@
+body {
+  background-color: black;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-family: verdana;
+}
+
+#header {
+  color: rgb(255, 255, 255);
+  margin-top: 50px;
+  margin-bottom: 20px;
+  font-family: Verdana;
+  font-weight: 700;
+}
+
+p {
+  text-align: center;
+  font-size: 14px;
+  color: rgb(177, 177, 177);
+}
+
+.p2 {
+  margin-bottom: 50px;
+}
+
+#main {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: antiquewhite;
+  width: 1000px;
+  height: 500px;
+}
+
+#canvas {
+  outline: 1px solid rgba(255, 255, 255, 0.171);
+}
