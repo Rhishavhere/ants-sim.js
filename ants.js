@@ -117,7 +117,7 @@ class Food {
 
   draw() {
     ctx.beginPath();
-    ctx.arc(this.x, this.y, 3, 0, 2 * Math.PI);
+    ctx.arc(this.x, this.y, 4, 0, 2 * Math.PI);
     ctx.fillStyle = "green";
     ctx.fill();
   }
