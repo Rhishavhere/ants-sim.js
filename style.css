@@ -27,7 +27,6 @@ p {
 }
 
 #main {
-  display: flex;
   justify-content: center;
   align-items: center;
   background-color: antiquewhite;
@@ -36,5 +35,11 @@ p {
 }
 
 #canvas {
-  outline: 1px solid rgba(255, 255, 255, 0.171);
+  outline: 2px solid rgba(255, 255, 255, 0.582);
+}
+#counter{
+  margin:20px 10px 10px 0px;
+}
+#double{
+  margin:10px;
 }

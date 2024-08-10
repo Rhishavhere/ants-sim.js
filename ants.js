@@ -1,5 +1,15 @@
-const main= document.getElementById("main");
-const canvas=document.getElementById("canvas")
+const main = document.getElementById("main");
+const canvas = document.getElementById("canvas");
+const counter = document.getElementById("counter");
+const double=document.getElementById("double");
+const clear=document.getElementById("clear");
+const add=document.getElementById("add");
+
+// const antSvg = new Image();
+// antSvg.src = "./ant.svg"
+
+// const antBreedSvg = new Image();
+// antBreedSvg.src = "./antBreed.svg"
 // const canvas = document.createElement("canvas");
 // document.main.appendChild(canvas);
 // canvas.width = Math.max(window.innerWidth, window.innerWidth);
@@ -22,7 +32,7 @@ class Ant {
     this.x = x;
     this.y = y;
     this.angle = Math.random() * 2 * Math.PI;
-    this.speed = 2;
+    this.speed = 3;
     this.state = "searching";
   }
 
@@ -87,9 +97,15 @@ class Ant {
 
   draw() {
     ctx.beginPath();
-    ctx.arc(this.x, this.y, 2, 0, 2 * Math.PI);
+    ctx.arc(this.x, this.y, 3, 0, 2 * Math.PI);
     ctx.fillStyle = this.state === "breeding" ? "red" : "white";
     ctx.fill();
+
+    // if(this.state==="breeding"){
+    //   ctx.drawImage(antBreedSvg, this.x, this.y, 10, 10);
+    // }else{
+    //   ctx.drawImage(antSvg, this.x, this.y, 10, 10);
+    // }
   }
 }
 
@@ -101,14 +117,15 @@ class Food {
 
   draw() {
     ctx.beginPath();
-    ctx.arc(this.x, this.y, 2, 0, 2 * Math.PI);
+    ctx.arc(this.x, this.y, 3, 0, 2 * Math.PI);
     ctx.fillStyle = "green";
     ctx.fill();
   }
 }
 
-let ants = [new Ant(width / 2, height / 2), new Ant(width / 2, height / 2)];
+let ants = [new Ant(width / 2, height / 2), new Ant(width / 2, height / 2),];
 let foods = [];
+// counter.innerText = `Total Ants : ${ants.length}`
 
 canvas.addEventListener('click', (event) => {
   const rect = canvas.getBoundingClientRect();
@@ -140,6 +157,7 @@ function update() {
           const newX = (ants[i].x + ants[j].x) / 2;
           const newY = (ants[i].y + ants[j].y) / 2;
           ants.push(new Ant(newX, newY));
+          counter.innerText = `Total Ants : ${ants.length}`
           ants[i].state = "searching";
           ants[j].state = "searching";
           break;
@@ -149,9 +167,29 @@ function update() {
     }
   }
 
+  
   foods.forEach(food => food.draw());
-
+  
   requestAnimationFrame(update);
 }
+
+
+double.addEventListener("click",(event)=>{
+  let total=ants.length;
+  for(let i=0;i<total;i++){
+    ants.push(new Ant(width/2, height/2))
+  }
+  counter.innerText = `Total Ants : ${ants.length}`
+})
+
+clear.addEventListener("click",(event)=>{
+  ants=[];
+  counter.innerText = `Total Ants : ${ants.length}`
+})
+
+add.addEventListener("click",(event)=>{
+  ants.push(new Ant(width/2,height/2));
+  counter.innerText = `Total Ants : ${ants.length}`
+})
 
 update();
