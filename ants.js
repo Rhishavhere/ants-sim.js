@@ -20,7 +20,7 @@ const add=document.getElementById("add");
 // canvas.height = window.innerHeight;
 // canvas.height = "500";
 // canvas.id="canvas"
-document.body.style.overflow = "hidden";
+// document.body.style.overflow = "hidden";
 
 // const canvas = document.getElementById('antCanvas');
 const ctx = canvas.getContext('2d');
