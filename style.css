@@ -40,9 +40,22 @@ p {
 #counter{
   margin:20px 10px 10px 0px;
 }
-#double{
-  margin:10px;
-}
+
 #section{
+  margin:14px;
   text-align: center;
+  display:flex;
+  gap:20px;
+}
+#section button{
+  font-size:16px;
+  border:1px solid white;
+  color:white;
+  border:none;
+  padding:10px;
+  background-color: rgb(94, 94, 94);
+  border-radius:5px;
+}
+#section button:hover{
+  cursor:pointer;
 }
