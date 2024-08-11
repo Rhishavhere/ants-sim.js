@@ -4,6 +4,8 @@ const counter = document.getElementById("counter");
 const double=document.getElementById("double");
 const clear=document.getElementById("clear");
 const add=document.getElementById("add");
+const pause=document.getElementById("pause");
+const play=document.getElementById("play");
 
 // const antSvg = new Image();
 // antSvg.src = "./ant.svg"
@@ -46,8 +48,8 @@ class Ant {
   }
 
   moveTowardsFood() {
-    if (foods.length > 0) {
-      const closestFood = foods.reduce((closest, food) => {
+    if (foodSource.length > 0) {
+      const closestFood = foodSource.reduce((closest, food) => {
         const dist = Math.hypot(this.x - food.x, this.y - food.y);
         return dist < closest.dist ? { food, dist } : closest;
       }, { food: null, dist: Infinity }).food;
@@ -109,45 +111,103 @@ class Ant {
   }
 }
 
-class Food {
-  constructor(x, y) {
-    this.x = x;
-    this.y = y;
-  }
+// class Food {
+//   constructor(x, y) {
+//     this.x = x;
+//     this.y = y;
+//   }
 
-  draw() {
-    ctx.beginPath();
-    ctx.arc(this.x, this.y, 4, 0, 2 * Math.PI);
-    ctx.fillStyle = "green";
-    ctx.fill();
-  }
-}
+//   draw() {
+//     ctx.beginPath();
+//     ctx.arc(this.x, this.y, 4, 0, 2 * Math.PI);
+//     ctx.fillStyle = "green";
+//     ctx.fill();
+//   }
+// }
 
 let ants = [new Ant(width / 2, height / 2), new Ant(width / 2, height / 2),];
-let foods = [];
+// let foods = [];
+let foodSource = [];
+let isDrawing = false;
+let isPlaying=true;
 // counter.innerText = `Total Ants : ${ants.length}`
 
-canvas.addEventListener('click', (event) => {
+canvas.addEventListener('mousedown', (event) => {
+  isDrawing = true;
+  addFoodAtMouse(event);
+});
+
+canvas.addEventListener('mousemove', (event) => {
+  if (isDrawing) {
+      addFoodAtMouse(event);
+  }
+});
+
+canvas.addEventListener('mouseup', () => {
+  isDrawing = false;
+});
+
+pause.addEventListener('click', () => {
+  isPlaying = false;
+});
+play.addEventListener('click', () => {
+  isPlaying = true;
+});
+
+function addFoodAtMouse(event) {
   const rect = canvas.getBoundingClientRect();
   const x = event.clientX - rect.left;
   const y = event.clientY - rect.top;
-  foods.push(new Food(x, y));
-});
+  foodSource.push({ x, y });
+}
+
+
+// canvas.addEventListener('click', (event) => {
+//   const rect = canvas.getBoundingClientRect();
+//   const x = event.clientX - rect.left;
+//   const y = event.clientY - rect.top;
+//   foods.push(new Food(x, y));
+// });
 
 function update() {
+
+
   ctx.fillStyle = "black";
   ctx.fillRect(0, 0, width, height);
 
+  //drawing food source
+  ctx.fillStyle = "green";
+  foodSource.forEach(food => {
+    ctx.beginPath();
+    ctx.arc(food.x, food.y, 4, 0, 2 * Math.PI);
+    ctx.fill();
+  });
+
+
   ants.forEach(ant => {
-    ant.move();
+    if(isPlaying){
+      ant.move();
+    }
     ant.draw();
 
-    foods.forEach((food, index) => {
+    // foods.forEach((food, index) => {
+    //   if (Math.hypot(ant.x - food.x, ant.y - food.y) < 5) {
+    //     foods.splice(index, 1);
+    //     ant.state = "breeding";
+    //   }
+    // });
+
+
+    for (let i = foodSource.length - 1; i >= 0; i--) {
+      const food = foodSource[i];
       if (Math.hypot(ant.x - food.x, ant.y - food.y) < 5) {
-        foods.splice(index, 1);
+        foodSource.splice(i, 1);
         ant.state = "breeding";
+        break;
       }
-    });
+    }
+
+
   });
 
   for (let i = 0; i < ants.length; i++) {
@@ -168,7 +228,7 @@ function update() {
   }
 
   
-  foods.forEach(food => food.draw());
+  // foods.forEach(food => food.draw());
   
   requestAnimationFrame(update);
 }
