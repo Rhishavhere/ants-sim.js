@@ -244,6 +244,7 @@ double.addEventListener("click",(event)=>{
 
 clear.addEventListener("click",(event)=>{
   ants=[];
+  foodSource=[];
   counter.innerText = `Total Ants : ${ants.length}`
 })
 
