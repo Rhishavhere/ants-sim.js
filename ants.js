@@ -34,7 +34,7 @@ class Ant {
     this.x = x;
     this.y = y;
     this.angle = Math.random() * 2 * Math.PI;
-    this.speed = 3;
+    this.speed = 2;
     this.state = "searching";
   }
 
