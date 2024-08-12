@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ant Colony Simulation</title>
     <link rel="stylesheet" href="style.css">
+    <script src='https://cdn.plot.ly/plotly-2.34.0.min.js'></script>
 </head>
 <body>
    <header id="header">ANTS SIMULATION</header>
@@ -19,13 +20,13 @@
 </main>
 <div id="counter">Total Ants : 2</div>
 <section id="section">
-        <button id="add">Add Ant</button>
-        <button id="double">2x Ants</button>
-        <button id="pause">Pause</button>
-        <button id="play">Play</button>
-        <button id="clear">Clear</button>
-
-    </section>
+    <button id="add">Add Ant</button>
+    <button id="double">2x Ants</button>
+    <button id="pause">Pause</button>
+    <button id="play">Play</button>
+    <button id="clear">Clear</button>
+</section>
+<graph id="graph" style="width:600px;height:250px;""></graph>
     <script src="ants.js"></script>
 </body>
 </html>

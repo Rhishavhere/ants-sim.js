@@ -1,3 +1,5 @@
+
+
 const main = document.getElementById("main");
 const canvas = document.getElementById("canvas");
 const counter = document.getElementById("counter");
@@ -6,6 +8,7 @@ const clear=document.getElementById("clear");
 const add=document.getElementById("add");
 const pause=document.getElementById("pause");
 const play=document.getElementById("play");
+const graph =document.getElementById("graph")
 
 // const antSvg = new Image();
 // antSvg.src = "./ant.svg"
@@ -254,3 +257,36 @@ add.addEventListener("click",(event)=>{
 })
 
 update();
+
+trace1 = {
+  type: 'scatter',
+  x: [1, 2, 3, 4],
+  y: [10, 15, 13, 17],
+  mode: 'lines',
+  name: 'Red',
+  line: {
+    color: 'rgb(219, 64, 82)',
+    width: 3
+  }
+};
+
+trace2 = {
+  type: 'scatter',
+  x: [1, 2, 3, 4],
+  y: [12, 9, 15, 12],
+  mode: 'lines',
+  name: 'Blue',
+  line: {
+    color: 'rgb(55, 128, 191)',
+    width: 1
+  }
+};
+
+var layout = {
+  width: 500,
+  height: 500
+};
+
+var data = [trace1, trace2];
+
+Plotly.newPlot('graph', data, layout);
