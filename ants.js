@@ -32,6 +32,8 @@ const ctx = canvas.getContext('2d');
 const width = canvas.width;
 const height = canvas.height;
 
+let numAnts=[2];
+
 class Ant {
   constructor(x, y) {
     this.x = x;
@@ -133,6 +135,9 @@ let ants = [new Ant(width / 2, height / 2), new Ant(width / 2, height / 2),];
 let foodSource = [];
 let isDrawing = false;
 let isPlaying=true;
+let timeElapsed=0;
+let populationData=[{x:0,y:2}]
+
 // counter.innerText = `Total Ants : ${ants.length}`
 
 canvas.addEventListener('mousedown', (event) => {
@@ -164,6 +169,40 @@ function addFoodAtMouse(event) {
   foodSource.push({ x, y });
 }
 
+const populationChart = new Chart(document.getElementById('graph'), {
+  type: "line",
+  data: {
+      datasets: [{
+          label: 'Ant Population',
+          data: populationData,
+          borderColor: 'rgb(75, 192, 192)',
+          tension: 0.1,
+          pointRadius:0,
+          pointHoverRadius:0,
+      }]
+  },
+  options: {
+      responsive:true,
+      scales: {
+          x: {
+              type: 'linear',
+              position: 'bottom',
+              title: {
+                  display: true,
+                  text: 'Time'
+              }
+          },
+          y: {
+              beginAtZero:false,
+              title: {
+                  display: true,
+                  text: 'Number of Ants'
+              }
+          }
+      },
+      animation: false
+  }
+});
 
 // canvas.addEventListener('click', (event) => {
 //   const rect = canvas.getBoundingClientRect();
@@ -233,6 +272,15 @@ function update() {
   
   // foods.forEach(food => food.draw());
   
+  
+  // Update time and population data
+  timeElapsed += 1;  // Assuming 60 FPS
+  if (Math.floor(timeElapsed) % 1 === 0 && timeElapsed % 1 < 1) {  // Update every 5 seconds
+    populationData.push({ x: Math.round(timeElapsed), y: ants.length });
+    populationChart.data.datasets[0].data = populationData;
+    populationChart.update();
+}
+  
   requestAnimationFrame(update);
 }
 
@@ -243,50 +291,24 @@ double.addEventListener("click",(event)=>{
     ants.push(new Ant(width/2, height/2))
   }
   counter.innerText = `Total Ants : ${ants.length}`
+  numAnts.push(ants.length)
 })
 
 clear.addEventListener("click",(event)=>{
   ants=[];
   foodSource=[];
   counter.innerText = `Total Ants : ${ants.length}`
+  numAnts.push(ants.length)
 })
 
 add.addEventListener("click",(event)=>{
   ants.push(new Ant(width/2,height/2));
   counter.innerText = `Total Ants : ${ants.length}`
+  numAnts.push(ants.length)
 })
 
 update();
 
-trace1 = {
-  type: 'scatter',
-  x: [1, 2, 3, 4],
-  y: [10, 15, 13, 17],
-  mode: 'lines',
-  name: 'Red',
-  line: {
-    color: 'rgb(219, 64, 82)',
-    width: 3
-  }
-};
 
-trace2 = {
-  type: 'scatter',
-  x: [1, 2, 3, 4],
-  y: [12, 9, 15, 12],
-  mode: 'lines',
-  name: 'Blue',
-  line: {
-    color: 'rgb(55, 128, 191)',
-    width: 1
-  }
-};
 
-var layout = {
-  width: 500,
-  height: 500
-};
 
-var data = [trace1, trace2];
-
-Plotly.newPlot('graph', data, layout);
